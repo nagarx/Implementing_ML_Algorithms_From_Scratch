@@ -35,7 +35,7 @@ class LinearRegression:
                 - ValueError: If input data is inconsistent or has incorrect dimensions.
         """
 
-        if not X or not y:
+        if X.size == 0 or y.size == 0:
             raise ValueError("Input data cannot be empty.")
         if len(X) != len(y):
             raise ValueError("The dimensions of X and y do not match.")
