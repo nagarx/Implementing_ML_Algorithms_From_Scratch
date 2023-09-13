@@ -11,6 +11,7 @@ class LogisticRegression:
         self.tol = tol
         self.weights, self.bias = None, None
         self.losses = []
+        self.val_losses = []
 
     @staticmethod
     def _sigmoid(z):
@@ -41,33 +42,39 @@ class LogisticRegression:
         best_weights, best_bias = self.weights, self.bias
         min_val_loss = float('inf')
 
-        # 4. Gradient Descent
+        # Gradient Descent
         for i in range(self.n_iterations):
             linear_model = np.dot(X, self.weights) + self.bias
             predictions = self._sigmoid(linear_model)
 
             # Compute gradients
-            dw = (1 / n_samples) * np.dot(X.T, (predictions - y)) + self.l1_lambda * np.sign(
-                self.weights) + self.l2_lambda * self.weights
+            dw = (1 / n_samples) * np.dot(X.T, (predictions - y))
             db = (1 / n_samples) * np.sum(predictions - y)
 
-            # Update parameters
-            self.weights -= self.learning_rate / (1 + 0.01 * i)  # Learning rate decay
+            # Add regularization to the gradient
+            dw += self.l1_lambda * np.sign(self.weights) + self.l2_lambda * self.weights
+
+            # Update parameters with a more gradual learning rate decay
+            self.weights -= (self.learning_rate / (1 + 0.001 * i)) * dw
             self.bias -= self.learning_rate * db
 
-            # Compute loss
+            # Compute and store training loss
             self.losses.append(self._compute_loss(y, predictions))
 
-            # Early stopping
-            if self.early_stopping and X_val is not None and y_val is not None:
+            # If validation data is provided, compute and store validation loss
+            if X_val is not None and y_val is not None:
                 val_preds = self._sigmoid(np.dot(X_val, self.weights) + self.bias)
                 val_loss = self._compute_loss(y_val, val_preds)
-                if val_loss + self.tol < min_val_loss:
-                    min_val_loss = val_loss
-                    best_weights, best_bias = self.weights, self.bias
-                elif val_loss > min_val_loss:
-                    self.weights, self.bias = best_weights, best_bias
-                    break
+                self.val_losses.append(val_loss)  # Storing validation loss at each iteration
+
+                # Early stopping
+                if self.early_stopping:
+                    if val_loss + self.tol < min_val_loss:
+                        min_val_loss = val_loss
+                        best_weights, best_bias = self.weights, self.bias
+                    elif val_loss > min_val_loss:
+                        self.weights, self.bias = best_weights, best_bias
+                        break
 
     def predict(self, X):
         linear_model = np.dot(X, self.weights) + self.bias
