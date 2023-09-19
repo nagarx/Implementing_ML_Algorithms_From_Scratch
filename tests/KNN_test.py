@@ -1,6 +1,6 @@
 
 import numpy as np
-from knn_from_scratch import KNN
+from models.KNN import KNN
 
 # Sample data (2 features for simplicity)
 X_train = np.array([[1, 1], [2, 2], [2, 3], [3, 3], [4, 5], [5, 5]])
