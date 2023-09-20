@@ -40,7 +40,7 @@ The repository is organized into two main directories:
 ## Getting Started:
 To utilize the algorithms in this repository, clone the project to your local machine. Navigate to the models directory to access the Python scripts for each algorithm.
 ```commandline
-git clone https://github.com/your_username/ML_Algorithms_From_Scratch.git
+git clone https://github.com/nagarx/Implementing_ML_Algorithms_From_Scratch.git
 cd ML_Algorithms_From_Scratch/models
 ```
 
