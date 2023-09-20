@@ -13,7 +13,7 @@ This project is implemented using Python 3.x. For testing and demonstration purp
 The repository is organized into two main directories:
 - __models__: Contains the Python scripts for each implemented machine learning algorithm.
 - __tests__: Includes Jupyter Notebooks and Python scripts that rigorously test the algorithms.
-
+```commandline
 ├── models
 │   ├── AdaBoost.py
 │   ├── DecisionTree.py
@@ -36,7 +36,7 @@ The repository is organized into two main directories:
 │   ├── NaiveBayes_test.ipynb
 │   ├── PCA_test.ipynb
 │   └── random_forest_test.ipynb
-
+```
 ## Getting Started:
 To utilize the algorithms in this repository, clone the project to your local machine. Navigate to the models directory to access the Python scripts for each algorithm.
 ```commandline
